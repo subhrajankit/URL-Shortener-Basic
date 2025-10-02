@@ -24,12 +24,18 @@ def generate_short_url():
 def index():
     if request.method == 'POST':
         original_url = request.form['original_url']
-        short_url = generate_short_url()
-
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        c.execute("INSERT INTO urls (original_url, short_url) VALUES (?, ?)", (original_url, short_url))
-        conn.commit()
+        c.execute("SELECT short_url FROM urls WHERE original_url = ?", (original_url,))    
+        existing = c.fetchone()
+
+        if existing:
+            short_url = existing[0]
+        else:
+            short_url = generate_short_url()
+            c.execute("INSERT INTO urls (original_url, short_url) VALUES (?, ?)", (original_url, short_url))
+            conn.commit()
+        
         conn.close()
 
         return render_template('index.html', short_url= short_url, original_url=original_url)
