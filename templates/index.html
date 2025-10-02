@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>URL Shortner</h1>
+        </div>
+        <div class= "content">
+            <p>Enter your URL below to shorten it</p>
+            <form id = "urlForm" method="post">
+                <input type = "url" id="longUrl" name="original_url" placeholder="Enter URL here" required />
+                <button type="submit">Shorten</button>
+            </form>
+        </div>
+        <div id = "result" style = "margin-top:20px; font-weight:bold;">
+            {% if short_url %}
+                <p>Your shortened URL is: <a href="{{ request.host_url}}{{ short_url }}" target="_blank">{{ request.host_url}}{{ short_url }}</a></p>
+            {% endif %}
+
+        </div>
+
+        <div class="footer">
+            <p>Created by Ankit💖</p>
+        </div>
+    </div>
+        
+    
+</body>
+</html>

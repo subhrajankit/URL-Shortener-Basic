@@ -20,7 +20,7 @@ def generate_short_url():
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=6))
 
-app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         original_url = request.form['original_url']
@@ -37,7 +37,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/<short_url>')
-def redirerct_short_url(short_url):
+def redirect_short_url(short_url):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute("SELECT original_url FROM urls WHERE short_url = ?", (short_url,))
